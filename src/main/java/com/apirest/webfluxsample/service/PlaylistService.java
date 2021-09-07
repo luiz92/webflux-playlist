@@ -22,6 +22,10 @@ public class PlaylistService {
         return playlistRepository.findById(id);
     }
 
+    public Mono<Playlist> finByIdNome(String nome) {
+        return playlistRepository.findByNome(nome);
+    }
+
     public Mono<Playlist> save(PlaylistRequest playlistRequest) {
         var playlist = new Playlist(playlistRequest.getNome());
         return playlistRepository.save(playlist);

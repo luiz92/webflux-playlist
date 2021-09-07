@@ -17,14 +17,19 @@ import java.time.Duration;
 public class PlaylistController {
     private final PlaylistService playlistService;
 
-    @GetMapping(value = "/buscarTodos")
+    @GetMapping(value = "/buscarTodos", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Playlist> buscarTodos (){
         return playlistService.findAll();
     }
 
-    @GetMapping(value = "/buscarPorId/{id}")
+    @GetMapping("/buscarPorId/{id}")
     public Mono<Playlist> buscarPorId (@PathVariable String id){
         return playlistService.finById(id);
+    }
+
+    @GetMapping("/buscarPorNome/{nome}")
+    public Mono<Playlist> buscarPorNome (@PathVariable String nome){
+        return playlistService.finByIdNome(nome);
     }
 
     @GetMapping(value = "/buscarTodos/events", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -34,7 +39,7 @@ public class PlaylistController {
         return Flux.zip(interval, events);
     }
 
-    @PostMapping(value = "/adicionar")
+    @PostMapping("/adicionar")
     public Mono<Playlist> adicionar (@RequestBody PlaylistRequest playlist){
         return playlistService.save(playlist);
     }
