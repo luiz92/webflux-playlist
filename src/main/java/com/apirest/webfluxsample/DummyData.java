@@ -16,7 +16,6 @@ public class DummyData implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-
         playlistRepository.deleteAll()
                 .thenMany(
                         Flux.just("Playlist 1",
@@ -24,7 +23,8 @@ public class DummyData implements CommandLineRunner {
                                         "Playlist 3",
                                         "Playlist 4",
                                         "Playlist 5")
-                                .map(nome -> new Playlist(UUID.randomUUID().toString(), nome))
+//                                .map(nome -> new Playlist(UUID.randomUUID().toString(), nome))
+                                .map(Playlist::new)
                                 .flatMap(playlistRepository::save))
                 .subscribe(System.out::println);
     }

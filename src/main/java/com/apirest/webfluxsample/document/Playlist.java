@@ -16,4 +16,8 @@ public class Playlist {
     @Id
     private String id;
     private String nome;
+
+    public Playlist(String nome) {
+        this.nome= nome;
+    }
 }
